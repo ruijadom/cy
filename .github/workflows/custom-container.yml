@@ -1,0 +1,20 @@
+name: Custom container
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: ubuntu-20.04
+    container: cypress/browsers:node12.13.0-chrome78-ff70
+    name: Tests inside custom image
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          record: true
+          group: Tests on Chrome
+          env: lastName=Smith
+        env:
+          CYPRESS_firstName: Joe
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
